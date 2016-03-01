@@ -1,0 +1,7 @@
+upload_g_file:
+    resource: "@UploadGFileBundle/Resources/config/routing.yml"
+    prefix:   /
+
+app:
+    resource: "@AppBundle/Controller/"
+    type:     annotation

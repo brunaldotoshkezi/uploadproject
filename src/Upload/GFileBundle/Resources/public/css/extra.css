@@ -1,0 +1,30 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 26-Feb-2016, 14:34:57
+    Author     : Brunaldo
+*/
+body{
+    position: relative;
+}
+button#upload_gfilebundle_upload_submit {
+    margin-left: 196px;
+    margin-top: -108px;
+}
+h4.title {
+    font-size: 12px;
+    position: relative;
+    bottom: 4px;
+}
+.form-container{
+    position: relative;
+}
+.loading-image {
+    position: absolute;
+    z-index: 9999;
+    width: 100%;
+    height: 100%;
+}

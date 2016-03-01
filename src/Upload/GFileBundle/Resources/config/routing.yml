@@ -1,0 +1,13 @@
+upload_g_file_homepage:
+    path:     /
+    defaults: { _controller: UploadGFileBundle:Default:index }
+    
+upload_gfile_create:
+    path: /create
+    defaults: {_controller: "UploadGFileBundle:Default:create"}
+    methods : [POST]
+
+upload_gfile_upload:
+    path: /upload/{data}
+    defaults: {_controller: "UploadGFileBundle:Default:upload"}
+    methods : [GET]

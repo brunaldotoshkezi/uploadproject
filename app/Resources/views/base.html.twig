@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>{% block title %}Carica i file!{% endblock %}</title>
+        {% block stylesheets %}
+        <link href="{{asset('bundles/uploadgfile/css/bootstrap.min.css')}} " rel="stylesheet" type="text/css"/>
+        <link href="{{asset('bundles/uploadgfile/css/extra.css')}} " rel="stylesheet" type="text/css"/>
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        
+        {% block body %}{% endblock %}
+        {% block javascripts %}
+            <script src="{{asset('bundles/uploadgfile/js/jquery.js')}}" type="text/javascript"></script>            
+            <script src="{{asset('bundles/uploadgfile/js/bootstrap.min.js')}}" type="text/javascript"></script>
+        {% endblock %}
+    </body>
+</html>

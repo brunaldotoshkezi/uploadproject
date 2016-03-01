@@ -1,0 +1,195 @@
+{% extends '::base.html.twig' %}
+
+{% block body -%}
+    <div class="container form-container">
+        {#<div class="loading-image">
+            <div class="loading-image-bg"></div>
+        </div>#}
+        <img alt="Xenia logo"  align="middle" width="122" height="80" src="http://www.xeniahs.com/images/firma_mail/xenia_low.jpg"/> <hr/>
+        <div class="flash-messages clearfix"></div>
+        {% for flashMessage in app.session.flashbag.get('msg') %}
+            <div class="alert alert-info" role="alert">
+                {{ flashMessage }}
+            </div>
+        {% endfor %}
+        {{ form_start(form, {'attr': {'id': 'form_upload_file'}}) }}
+        <div class="form-group row">
+            <label  class="col-sm-2 form-control-label"></label>
+            <div class="col-sm-10"><h4 class="text-muted">Carica i File</h4></div>
+        </div>
+        <div class="form-group row">
+            <label  class="col-sm-2 form-control-label">Nome</label>
+            <div class="col-sm-10">
+                {{ form_row(form.name) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  class="col-sm-2 form-control-label">Email</label>
+            <div class="col-sm-10">
+                {{ form_row(form.email) }}
+            </div>
+        </div>
+        <div class="form-group row">
+            <label  class="col-sm-2 form-control-label">Captcha</label>
+            <div class="col-sm-10">
+                <div class="g-recaptcha" data-sitekey="6LfWQRkTAAAAAPM7d6QlMkfJcLze7R5lHjUYtr8I"></div>
+            </div>
+        </div>
+        <div class="form-group row">
+            <label class="form-control-label col-sm-2">File <small>(Max size: 100MB)</small></label>
+            <div class="col-sm-2">
+                {{ form_row(form.file) }}
+            </div> 
+            {#<div class="col-sm-6">             
+                <img style="position: relative;bottom: 57px; width: 34%;right: 82px;"alt="gif" src="{{asset('bundles/uploadgfile/image/loading.gif')}}"/>
+            </div>#}
+            <div class="col-sm-4">
+                <div class="progress">
+                    <div class="progress-bar progress-bar-success progress-bar-striped"  role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" style="width: 0%">
+                        <span class="sr-only">40% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {{ form_end(form) }}
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{parent()}}
+    <script src='https://www.google.com/recaptcha/api.js'></script>
+    <script>
+        $(document).ready(function () {
+            var $form = $('#form_upload_file');
+            $($form).submit(function (e) {
+        {#$('.loading-image').show();#}
+                    var formdata = new FormData(this);
+                    var data = {
+                        'name': $('#upload_gfilebundle_upload_name').val(),
+                        'email': $('#upload_gfilebundle_upload_email').val(),
+                        formdata,
+                                'filename': $('#upload_gfilebundle_upload_file').val(),
+                    };
+                    formdata.append('name', $('#upload_gfilebundle_upload_name').val());
+                    formdata.append('email', $('#upload_gfilebundle_upload_email').val());
+                    formdata.append('file', $('#upload_gfilebundle_upload_file').val());
+                    formdata.append('filename', $('#upload_gfilebundle_upload_file').val());
+                    console.log(formdata);
+                    console.log(data);
+
+                    var url = $form.attr('action');
+                    //var data1=0;
+                    var progresspump = setInterval(function () {
+                        // $.get("/uploadproject/web/app_dev.php/upload/",data, function(data1){
+                        $.ajax({
+                            url: url,
+                            dataType: 'json',
+                            type: 'post',
+                            data: formdata,
+                            processData: false,
+                            contentType: false,
+                            success: function (data1) {
+                                alert(data1);
+                            },
+                            error: function (a, b, c) {
+                                $('.container').append(a.responseText);
+                            }
+                        });
+                        //data1+=parseInt(data);
+                        // alert(data1);
+                        //$(".progress-bar").css('width',data1+'%');
+
+                        //$(".progress-bar").html(data1+'%');
+
+                        //if(data1 > 99.999) {
+                        // clearInterval(progresspump);
+                        // $("#progressouter").removeClass("active");
+                        //$("#progress").html("Done");
+                        //}
+                        //})
+                    }, 1000);
+        {#function veryLongImport()
+                    {
+                         isInProgress = true;
+                         checkfx();
+                         $.ajax({
+                                type: "GET",
+                                url: url ,
+                                async : true,
+                                cache: false,
+                                dataType:'html',
+                                success: function(data){},
+                                error: function(){  },
+                                complete: function(){
+                                    isInProgress = false;
+                                }
+                            });
+                    }
+
+                    function checkfx()
+                    {
+                        if( isInProgress != false )
+                        {
+                            $.ajax({
+                                type: "GET",
+                                url: /mycheckpath ,
+                                async : true,
+                                cache: false,
+                                dataType:'html',
+                                success: function(data){
+                                     makeYourProgressBarGrowHere();
+                                 },
+                                error: function(){  },
+                                complete: function(){
+                                    checkfx();
+                                }
+                            });
+                        } 
+                    }
+        #}
+        {#  $.ajax({
+            url: url,
+            dataType: 'json',
+            type: 'post',
+            data: formdata,
+            processData: false,
+            contentType: false,
+            xhr: function () {
+                var xhr = $.ajaxSettings.xhr();
+                xhr.upload.onprogress = function (e) {
+                    var loaded = e.loaded;
+                    var total = e.total;
+                    var math = Math.floor(loaded / total * 100);
+                    var progressHtml = '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="'+math+'" aria-valuemin="0" aria-valuemax="100" style="width: '+math+'%">'+
+                                            '<span class="sr-only">'+math+'% Complete (success)</span>'+
+                                        '</div>';
+                    $('.progress').append(progressHtml);
+                    console.log(loaded);
+                    console.log(total);
+                    console.log(math + '%');
+                    console.log(e);
+                };
+                return xhr;
+            },
+            success: function (data) {
+                $('.loading-image').hide();
+                if (data.success == true) {
+                    $('#upload_gfilebundle_upload_name').val("");
+                    $('#upload_gfilebundle_upload_email').val("");
+                    $('#upload_gfilebundle_upload_file').val("");
+                    $('.flash-messages').append('<div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + data.message + '</div>');
+                    console.log(data);
+                } else {
+                    $('.flash-messages').append('<div class="alert alert-success alert-dismissible fade in" role="alert"> <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>' + data.message + '</div>');
+                    console.log(data);
+                }
+            },
+            error: function (a, b, c) {
+                $('.container').append(a.responseText);
+            }
+        });#}
+                    e.preventDefault();
+                });
+            });
+
+    </script>
+{% endblock %}
